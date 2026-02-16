@@ -31,13 +31,13 @@
     <!-- Highlight Color -->
     <variable name="ColorHighlight">
         <value condition="!String.IsEmpty(Skin.String(focuscolor.name))">$INFO[Skin.String(focuscolor.name)]</value>
-        <value>ffffffff</value>
+        <value>ffb71c71</value>
     </variable>
 
     <!-- Watched / Progress Color -->
     <variable name="ColorWatchedProgress">
         <value condition="!String.IsEmpty(Skin.String(watchedprogresscolor.name))">$INFO[Skin.String(watchedprogresscolor.name)]</value>
-        <value>ff03b585</value>
+        <value>ff283ba8</value>
     </variable>
 
     <!-- Mouse Pointer -->
