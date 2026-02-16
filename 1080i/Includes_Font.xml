@@ -103,9 +103,9 @@
     </include>
 
     <include name="Font_Default">
-        <param name="font_bold">Inter-Bold.ttf</param>
-        <param name="font_regular">Inter-Regular.ttf</param>
-        <param name="font_light">Inter-Light.ttf</param>
+        <param name="font_bold">Exo2-Bold.ttf</param>
+        <param name="font_regular">Exo2-Regular.ttf</param>
+        <param name="font_light">Exo2-Light.ttf</param>
         <param name="style_light" />
         <param name="size_hint">15</param>
         <param name="size_tiny">21</param>
