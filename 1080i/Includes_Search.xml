@@ -7,258 +7,138 @@
     </include>
 
     <include name="Search_Bar">
-
-        <control type="button" id="302">
-            <texturefocus />
-            <texturenofocus />
-            <onfocus>AlarmClock(resetproperty_1,SetProperty(HomeSwitcher.IsVisible,True,Home),00:00,silent)</onfocus>
-            <onfocus>AlarmClock(resetproperty_2,ClearProperty(TMDBHelper.WidgetContainer),00:00,silent)</onfocus>
-            <onfocus>AlarmClock(refocus,SetFocus(303),00:00,silent)</onfocus>
-        </control>
-
-        <control type="button" id="303">
-            <texturefocus />
-            <texturenofocus />
-            <onfocus condition="Skin.HasSetting(Search.DisableCombined)">$VAR[Hub_Action_Reset]</onfocus>
-            <onfocus>SetFocus(305)</onfocus>
-            <onfocus>SetProperty(HomeSwitcher.IsVisible,True,Home)</onfocus>
-            <onfocus>ClearProperty(TMDBHelper.WidgetContainer)</onfocus>
-        </control>
-
-        <control type="button" id="304">
-            <texturefocus />
-            <texturenofocus />
-            <onfocus>SetFocus(300)</onfocus>
-            <onfocus>SetProperty(HomeSwitcher.IsVisible,True,Home)</onfocus>
-            <onfocus>ClearProperty(TMDBHelper.WidgetContainer)</onfocus>
-        </control>
-
-        <control type="image">
-            <include>Home_Fade_Animation</include>
-            <visible>!String.IsEmpty(Window(Home).Property(HomeSwitcher.IsVisible))</visible>
-            <texture colordiffuse="main_bg_70">background/combined_topmenu.png</texture>
-            <bottom>400</bottom>
-        </control>
-
-
-
+        <include>Background</include>
         <control type="group">
-
-            <!-- <visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-            <include>Home_Animation</include> -->
-
             <include>Animation_Group_Bumper</include>
-
-            <control type="group">
-                <visible>!Skin.HasSetting(Search.DisableCombined)</visible>
-                <visible>!$EXP[Exp_InfoDialogs]</visible>
-                <control type="group">
-                    <include>Dimension_Bottombar</include>
-                    <include content="View_Furniture_Footer_ViewLine">
-                        <param name="visible">true</param>
-                        <param name="label">$INFO[Container(601).ListItem.Property(widget_numitems),, $LOCALIZE[31022]]</param>
-                        <param name="label_fallback">$INFO[System.AddonVersion(skin.af3.genesis),arctic.fuse v,]</param>
-                    </include>
+            <control type="group" id="Search_Prime_Controls">
+                <visible allowhiddenfocus="true">[Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(303) | Control.HasFocus(304) | Control.HasFocus(305)]</visible>
+                <visible>!Window.IsActive(DialogKeyboard.xml)</visible>
+                <control type="group" id="Search_Prime_InputArea">
+                    <left>view_pad</left>
+                    <top>view_pad</top>
+                    <width>1160</width>
+                    <height>360</height>
+                    <include>Home_Animation</include>
+                    <include>Search_Bar_Defs</include>
+                    <include>Search_Bar_Edit</include>
+                    <include>Search_Bar_Icon</include>
+                    <include>Search_Bar_Keys</include>
+                    <control type="group" id="Search_Prime_Suggestions">
+                        <left>0</left>
+                        <top>110</top>
+                        <width>760</width>
+                        <height>180</height>
+                        <control type="group">
+                            <left>0</left>
+                            <top>0</top>
+                            <right>0</right>
+                            <bottom>0</bottom>
+                            <include>Part_Background_Panel</include>
+                        </control>
+                        <include content="List_DialogSelect">
+                            <param name="id">304</param>
+                            <param name="itemlayout_include">Layout_DialogBasic</param>
+                            <top>20</top>
+                            <left>20</left>
+                            <right>-20</right>
+                            <bottom>20</bottom>
+                            <orientation>vertical</orientation>
+                            <content>plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(300).index(1)]</content>
+                            <onclick>SetFocus(300)</onclick>
+                            <onclick>RunScript(script.skinvariables,set_editcontrol=300,window_id=1105,setfocus=300,text=$INFO[Container(304).ListItem.Label])</onclick>
+                            <onclick condition="!String.IsEmpty(Container(304).ListItem.Label)">SetProperty(Search.Recent.4,$INFO[Window.Property(Search.Recent.3)])||SetProperty(Search.Recent.3,$INFO[Window.Property(Search.Recent.2)])||SetProperty(Search.Recent.2,$INFO[Window.Property(Search.Recent.1)])||SetProperty(Search.Recent.1,$INFO[Container(304).ListItem.Label])</onclick>
+                        </include>
+                    </control>
+                    <control type="group" id="Search_Prime_Recents">
+                        <left>780</left>
+                        <top>110</top>
+                        <width>320</width>
+                        <height>180</height>
+                        <visible>!String.IsEmpty(Window.Property(Search.Recent.1))</visible>
+                        <control type="label">
+                            <font>font_main_bold</font>
+                            <label>Recent searches</label>
+                            <textcolor>main_fg_40</textcolor>
+                            <align>left</align>
+                        </control>
+                        <control type="button" id="311">
+                            <left>0</left>
+                            <top>36</top>
+                            <width>320</width>
+                            <height>30</height>
+                            <font>font_main</font>
+                            <textcolor>main_fg_90</textcolor>
+                            <align>left</align>
+                            <label>$INFO[Window.Property(Search.Recent.1)]</label>
+                            <visible>!String.IsEmpty(Window.Property(Search.Recent.1))</visible>
+                            <onclick>RunScript(script.skinvariables,set_editcontrol=300,window_id=1105,setfocus=300,text=$INFO[Window.Property(Search.Recent.1)])</onclick>
+                            <onclick>SetFocus(300)</onclick>
+                        </control>
+                        <control type="button" id="312">
+                            <left>0</left>
+                            <top>74</top>
+                            <width>320</width>
+                            <height>30</height>
+                            <font>font_main</font>
+                            <textcolor>main_fg_90</textcolor>
+                            <align>left</align>
+                            <label>$INFO[Window.Property(Search.Recent.2)]</label>
+                            <visible>!String.IsEmpty(Window.Property(Search.Recent.2))</visible>
+                            <onclick>RunScript(script.skinvariables,set_editcontrol=300,window_id=1105,setfocus=300,text=$INFO[Window.Property(Search.Recent.2)])</onclick>
+                            <onclick>SetFocus(300)</onclick>
+                        </control>
+                        <control type="button" id="313">
+                            <left>0</left>
+                            <top>112</top>
+                            <width>320</width>
+                            <height>30</height>
+                            <font>font_main</font>
+                            <textcolor>main_fg_90</textcolor>
+                            <align>left</align>
+                            <label>$INFO[Window.Property(Search.Recent.3)]</label>
+                            <visible>!String.IsEmpty(Window.Property(Search.Recent.3))</visible>
+                            <onclick>RunScript(script.skinvariables,set_editcontrol=300,window_id=1105,setfocus=300,text=$INFO[Window.Property(Search.Recent.3)])</onclick>
+                            <onclick>SetFocus(300)</onclick>
+                        </control>
+                    </control>
                 </control>
             </control>
-
-            <!-- Content -->
-            <control type="group" id="400">
-
-
-                <control type="group" id="500">
-                    <include>Animation_View_WindowChange</include>
-
-                    <include content="Hub_Combined_Widget" condition="!Skin.HasSetting(Search.DisableDiscover) + !Skin.HasSetting(Search.DisableCombined)">
-                        <param name="id">501</param>
-                        <param name="content">$INFO[window(home).property(tmdbhelper.userdiscover.folderpath)]$INFO[Control.GetLabel(300).index(1),&amp;with_text_query=,]</param>
-                        <param name="include">List_Poster_Row</param>
-                        <param name="target">videos</param>
-                        <param name="visible">String.IsEqual(Container(601).ListItem.Property(guid),discover)</param>
-                        <param name="allowhiddenfocus">true</param>
+            <control type="group" id="Search_Prime_Results">
+                <left>view_pad</left>
+                <right>-view_pad</right>
+                <top>440</top>
+                <bottom>-view_pad</bottom>
+                <control type="group">
+                    <left>0</left>
+                    <top>0</top>
+                    <right>0</right>
+                    <bottom>0</bottom>
+                    <include>Part_Background_Panel</include>
+                </control>
+                <control type="group" id="Search_Prime_TopRail">
+                    <left>view_pad</left>
+                    <right>-view_pad</right>
+                    <top>40</top>
+                    <height>160</height>
+                    <include content="Hub_Widget_Switcher">
+                        <param name="include_content">Search_Switcher_Items</param>
+                        <param name="wall">false</param>
+                        <param name="top">0</param>
+                        <param name="onup">300</param>
+                        <param name="home_switcher">false</param>
                     </include>
-
+                </control>
+                <control type="group" id="Search_Prime_Grid">
+                    <left>view_pad</left>
+                    <right>-view_pad</right>
+                    <top>220</top>
+                    <bottom>-view_pad</bottom>
                     <include condition="!Skin.HasSetting(Search.DisableCombined)">skinvariables-searchwidgets-combined</include>
                     <include condition="Skin.HasSetting(Search.DisableCombined)">skinvariables-searchwidgets-standard</include>
-
-                    <include content="Hub_Widget_Switcher" condition="!Skin.HasSetting(Search.DisableCombined)">
-                        <param name="include_content">Search_Switcher_Items</param>
-                        <param name="top">520</param>
-                        <param name="wall">false</param>
-                        <param name="onup">302</param>
-                    </include>
-                    <include content="Hub_Widget_Switcher" condition="Skin.HasSetting(Search.DisableCombined)">
-                        <param name="include_content">Search_Switcher_Items</param>
-                        <param name="top">-520</param>
-                        <param name="wall">false</param>
-                        <param name="onup">302</param>
-                    </include>
                 </control>
-
-
-                <control type="group">
-                    <include content="Animation_ConditionalFade">
-                        <param name="condition">String.IsEmpty(Window.Property(TMDBHelper.WidgetContainer)) | Integer.IsEqual(Container(601).NumItems,0) | Control.HasFocus(300) | Control.HasFocus(305)</param>
-                    </include>
-                    <include content="Hub_Combined_Info" condition="!Skin.HasSetting(Search.DisableDiscover) + !Skin.HasSetting(Search.DisableCombined)">
-                        <param name="id">501</param>
-                    </include>
-                    <include>skinvariables-searchwidgets-info</include>
-                </control>
-
-                <control type="label">
-                    <font>font_head_bold</font>
-                    <label>$VAR[Label_Search_Title_NoResults]</label>
-                    <align>left</align>
-                    <height>80</height>
-                    <textcolor>main_fg_90</textcolor>
-                    <visible>[String.IsEmpty(Window.Property(TMDBHelper.WidgetContainer)) | Integer.IsEqual(Container(601).NumItems,0) | Control.HasFocus(300) | Control.HasFocus(305)]</visible>
-                    <include>Home_Animation</include>
-                    <left>view_pad</left>
-                    <top>280</top>
-                    <visible>Skin.HasSetting(HomeSwitcher.DisableHeader)</visible>
-                </control>
-                <control type="label">
-                    <wrapmultiline>true</wrapmultiline>
-                    <font>font_main_plot</font>
-                    <label>$VAR[Label_Search_NoResults]</label>
-                    <align>left</align>
-                    <height>80</height>
-                    <textcolor>main_fg_30</textcolor>
-
-                    <visible>[String.IsEmpty(Window.Property(TMDBHelper.WidgetContainer)) | Integer.IsEqual(Container(601).NumItems,0) | Control.HasFocus(300) | Control.HasFocus(305)]</visible>
-                    <include>Home_Animation</include>
-                    <!-- <include>Home_Slide_Animation</include> -->
-                    <left>view_pad</left>
-                    <top>360</top>
-                </control>
-
-            </control>
-
-
-
-            <control type="group">
-                <visible allowhiddenfocus="true">[Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(303) | Control.HasFocus(304) | Control.HasFocus(305)]</visible>
-                <animation effect="slide" start="0" end="0,-70" condition="Skin.HasSetting(HomeSwitcher.DisableHeader)">Conditional</animation>
-                <visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-                <include>Home_Animation</include>
-                <control type="group">
-                    <include>Home_Group_Definition</include>
-                    <control type="group">
-                        <include>Search_Bar_Defs</include>
-                        <include>Search_Bar_Edit</include>
-                        <include>Search_Bar_Icon</include>
-                        <include>Search_Bar_Keys</include>
-                    </control>
-                    <include>Home_Switcher_Right_Buttons</include>
-                </control>
-
-                <include content="Furniture_Header" condition="!Skin.HasSetting(HomeSwitcher.DisableHeader)">
-                    <param name="label">$LOCALIZE[137]</param>
-                </include>
             </control>
         </control>
     </include>
-
-    <include name="Search_Switcher_Items">
-        <item>
-            <label>$LOCALIZE[31066]</label>
-            <property name="guid">discover</property>
-            <property name="widget_id">$NUMBER[501]</property>
-            <property name="show_artwork">true</property>
-            <property name="widget_numitems">$INFO[Container(501).NumItems]</property>
-            <onclick>RunPlugin(plugin://plugin.video.themoviedb.helper/?info=user_discover$INFO[Window(Home).Property(TMDbHelper.UserDiscover.Folderpath.ParamString),&amp;,])</onclick>
-            <visible>!Integer.IsEqual(Container(501).NumItems,0)</visible>
-        </item>
-        <include>skinvariables-searchwidgets-selector</include>
-    </include>
-
-    <include name="Search_Bar_Defs">
-        <left>-20</left>
-        <width>800</width>
-        <height>80</height>
-        <centertop>50%</centertop>
-    </include>
-
-    <include name="Search_Term_DoubleEncoder">
-        <include content="Object_Hidden_List">
-            <param name="id">310</param>
-            <content>plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;&amp;$INFO[Control.GetLabel(300).index(1)]</content>
-        </include>
-        <include content="Object_Hidden_List">
-            <param name="id">320</param>
-            <content>plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;&amp;$INFO[Container(310).ListItem.Label]</content>
-        </include>
-    </include>
-
-    <include name="Search_Autocompletion_Dropdown">
-        <control type="group">
-            <include>Part_Dim_Overlay</include>
-            <control type="group">
-                <left>40</left>
-                <top>200</top>
-                <width>800</width>
-                <height>840</height>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsGreater(Container(304).NumItems,8)</visible>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,8)</visible>
-                    <bottom>80</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,7)</visible>
-                    <bottom>160</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,6)</visible>
-                    <bottom>240</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,5)</visible>
-                    <bottom>320</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,4)</visible>
-                    <bottom>400</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,3)</visible>
-                    <bottom>480</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,2)</visible>
-                    <bottom>560</bottom>
-                </control>
-                <control type="group">
-                    <include>Part_Background_Panel</include>
-                    <visible>Integer.IsEqual(Container(304).NumItems,1)</visible>
-                    <bottom>640</bottom>
-                </control>
-                <include content="List_DialogSelect">
-                    <param name="id">304</param>
-                    <param name="itemlayout_include">Layout_DialogBasic</param>
-                    <top>60</top>
-                    <bottom>60</bottom>
-                    <left>60</left>
-                    <right>60</right>
-                    <orientation>vertical</orientation>
-                    <content>plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(300).index(1)]</content>
-                    <onclick>SetFocus(300)</onclick>
-                    <onclick>RunScript(script.skinvariables,set_editcontrol=300,window_id=1105,setfocus=300,text=$INFO[Container(304).ListItem.Label])</onclick>
-                </include>
-            </control>
-        </control>
-    </include>
-
     <include name="Search_Bar_Edit">
         <include>Search_Term_DoubleEncoder</include>
 
@@ -284,9 +164,17 @@
             <onright>$INFO[Container(399).ListItem(1).Property(action)]</onright>
             <onup condition="!Skin.HasSetting(Search.DisableDiscover) + !Skin.HasSetting(Search.DisableCombined)">RunPlugin(plugin://plugin.video.themoviedb.helper/?info=user_discover$INFO[Window(Home).Property(TMDbHelper.UserDiscover.Folderpath.ParamString),&amp;,])</onup>
             <ondown>305</ondown>
+            <onok condition="!String.IsEmpty(Control.GetLabel(300).index(1))">SetProperty(Search.Recent.4,$INFO[Window.Property(Search.Recent.3)])||SetProperty(Search.Recent.3,$INFO[Window.Property(Search.Recent.2)])||SetProperty(Search.Recent.2,$INFO[Window.Property(Search.Recent.1)])||SetProperty(Search.Recent.1,$INFO[Control.GetLabel(300).index(1)])</onok>
             <texturefocus />
             <texturenofocus />
         </control>
+    </include>
+
+    <include name="Search_Bar_Defs">
+        <left>0</left>
+        <top>0</top>
+        <width>760</width>
+        <height>70</height>
     </include>
 
     <include name="Search_Bar_Icon">
@@ -312,10 +200,10 @@
             <onup>300</onup>
             <ondown condition="!Skin.HasSetting(Search.DisableCombined)">601</ondown>
             <ondown condition="Skin.HasSetting(Search.DisableCombined)">602</ondown>
-            <width>700</width>
-            <centerleft>50%</centerleft>
-            <height>100</height>
-            <top>95</top>
+            <width>760</width>
+            <left>0</left>
+            <height>120</height>
+            <top>220</top>
 
             <onfocus>ClearProperty(Background.ShowOverlay,Home)</onfocus>
 
