@@ -11,15 +11,22 @@
         <param name="window_id">Home</param>
     </include>
 
-    <onload condition="!Skin.HasSetting(Home.FirstRun)">Skin.SetBool(Hub.Home.DisableSubmenu)</onload>
-    <onload condition="!Skin.HasSetting(Home.FirstRun)">Skin.SetString(Shortcuts.RebuildDateTime,FirstRun)</onload>
-    <onload condition="!Skin.HasSetting(Home.FirstRun)">Skin.SetBool(Home.FirstRun)</onload>
-    <onload condition="!Skin.HasSetting(Home.FirstRun)">AlarmClock(reloadskin,ReloadSkin(),00:00,silent)</onload>
+    <variable name="Home_FirstRun_NotSet">
+        <value>!Skin.HasSetting(Home.FirstRun)</value>
+    </variable>
+    <variable name="Home_FirstRun_FirstStart_Focus">
+        <value>Skin.HasSetting(Home.FirstRun) + String.IsEmpty(Window(1198).Property(FirstStart))</value>
+    </variable>
+
+    <onload condition="$VAR[Home_FirstRun_NotSet]">Skin.SetBool(Hub.Home.DisableSubmenu)</onload>
+    <onload condition="$VAR[Home_FirstRun_NotSet]">Skin.SetString(Shortcuts.RebuildDateTime,FirstRun)</onload>
+    <onload condition="$VAR[Home_FirstRun_NotSet]">Skin.SetBool(Home.FirstRun)</onload>
+    <onload condition="$VAR[Home_FirstRun_NotSet]">AlarmClock(reloadskin,ReloadSkin(),00:00,silent)</onload>
 
     <onload>$VAR[Action_RatingsMonitor]</onload>
 
-    <onload condition="Skin.HasSetting(Home.FirstRun) + String.IsEmpty(Window(1198).Property(FirstStart))">$VAR[Action_FirstStart_HomeFocus]</onload>
-    <onload condition="Skin.HasSetting(Home.FirstRun) + String.IsEmpty(Window(1198).Property(FirstStart))">SetProperty(FirstStart,True,1198)</onload>
+    <onload condition="$VAR[Home_FirstRun_FirstStart_Focus]">$VAR[Action_FirstStart_HomeFocus]</onload>
+    <onload condition="$VAR[Home_FirstRun_FirstStart_Focus]">SetProperty(FirstStart,True,1198)</onload>
 
     <controls>
         <include content="Hub_Window">

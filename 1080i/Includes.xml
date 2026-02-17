@@ -2,16 +2,6 @@
 <includes>
 
     <include file="Includes_Font.xml" />
-
-    <include file="Includes_Constants_FlixArt_Large.xml" condition="Skin.String(Skin.FlixArt.Size,Large)" />
-    <include file="Includes_Constants_FlixArt_ExtraLarge.xml" condition="Skin.String(Skin.FlixArt.Size,ExtraLarge)" />
-    <include file="Includes_Constants_4x3.xml" condition="String.IsEqual(Skin.AspectRatio,4:3)" />
-    <include file="Includes_Constants_3x2.xml" condition="String.IsEqual(Skin.AspectRatio,3:2)" />
-    <include file="Includes_Constants_16x10.xml" condition="String.IsEqual(Skin.AspectRatio,16:10)" />
-    <include file="Includes_Constants_17x9.xml" condition="String.IsEqual(Skin.AspectRatio,17:9)" />
-    <include file="Includes_Constants_18x9.xml" condition="String.IsEqual(Skin.AspectRatio,18:9)" />
-    <include file="Includes_Constants_19.5x9.xml" condition="String.IsEqual(Skin.AspectRatio,19.5:9)" />
-    <include file="Includes_Constants_21x9.xml" condition="String.IsEqual(Skin.AspectRatio,21:9)" />
     <include file="Includes_Constants.xml" />
 
     <include file="Includes_Home.xml" />

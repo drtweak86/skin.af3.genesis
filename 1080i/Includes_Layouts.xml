@@ -2092,6 +2092,26 @@
         </definition>
     </include>
 
+    <include name="Layout_Poster_Minimal">
+        <param name="diffuse">diffuse/poster_w217_h310.png</param>
+        <param name="icon">$VAR[Image_Poster]</param>
+        <param name="listitem">ListItem</param>
+        <param name="selected">false</param>
+        <definition>
+            <control type="group">
+                <width>$PARAM[item_w]</width>
+                <height>$PARAM[item_h]</height>
+                <include content="Object_Layout_Image_Rectangle">
+                    <param name="diffuse">$PARAM[diffuse]</param>
+                    <param name="icon">$PARAM[icon]</param>
+                    <param name="listitem">$PARAM[listitem]</param>
+                    <param name="aspectratio">scale</param>
+                    <param name="selected">$PARAM[selected]</param>
+                </include>
+            </control>
+        </definition>
+    </include>
+
     <include name="Layout_Reviews">
         <param name="selected">false</param>
         <param name="detailed">false</param>

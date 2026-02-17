@@ -766,9 +766,9 @@
         <param name="orientation">horizontal</param>
         <param name="control">list</param>
         <param name="id" />
-        <param name="preloaditems">2</param>
-        <param name="tween">quadratic</param>
-        <param name="scrolltime">400</param>
+        <param name="preloaditems">0</param>
+        <param name="tween">linear</param>
+        <param name="scrolltime">250</param>
         <param name="viewtype">list</param>
         <param name="offset_x">view_offx</param>
         <param name="offset_y">80</param>
@@ -783,8 +783,10 @@
         <param name="indicator">true</param>
         <param name="hidden_button_enabled">false</param>
         <param name="hidden_button">List_Widget_Row_HiddenButton</param>
+        <param name="set_widgetcontainer">false</param>
         <definition>
             <control type="$PARAM[control]" id="$PARAM[id]">
+                <onfocus condition="$PARAM[set_widgetcontainer]">SetProperty(TMDbHelper.WidgetContainer,$PARAM[id])</onfocus>
                 <nested />
                 <include content="$PARAM[hidden_button]_OnFocus" condition="$PARAM[hidden_button_enabled]">
                     <param name="prefix">$PARAM[hidden_button_prefix]</param>
